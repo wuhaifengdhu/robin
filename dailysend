@@ -1,0 +1,23 @@
+#!/bin/bash
+cd /root/robin
+
+#prepare mail subject
+subject='The '`date +%W`'th '`date +%A`' for you'
+echo $subject
+
+#prepare mail content
+cat template/head > temp
+day=`date +%w`
+cat meiwen/$day | grep -v fillSlot >> temp
+cat template/end >> temp
+cat temp
+
+#send mail to address in maillist
+for mailaddress in `cat ./conf/maillist`
+do
+	cat temp | mail -s "$subject" $mailaddress
+done
+echo "----------------------" >> ./logs/sendmail
+date >> ./logs/sendmail
+cat temp >> ./logs/sendmail
+rm temp
