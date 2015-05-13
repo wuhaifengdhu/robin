@@ -8,7 +8,7 @@ echo $subject
 #prepare mail content
 cat template/head > temp
 day=`date +%w`
-cat meiwen/$day | grep -v fillSlot >> temp
+cat content | grep -v fillSlot >> temp
 cat template/end >> temp
 cat temp
 

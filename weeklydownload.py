@@ -3,6 +3,7 @@ import sys
 import re
 import urllib2
 from bs4 import BeautifulSoup
+from module.MeiwenDbHelper import MeiwenDbHelper
 import commands
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -20,11 +21,10 @@ def downloadurl(url):
 	return re.sub('<[^>]+>','',htmldoc.text)
 
 if __name__ == '__main__':
-	urls = getUrls()
-	length = len(urls) if len(urls)< 8 else 8
-	for i in range(length):
-		output=open('./meiwen/'+str(i),'w')
-		output.write(downloadurl(urls[i]))
-		output.close()
-
+	urls = getUrls() 
+	meiwen = MeiwenDbHelper()
+	meiwen.connect()
+	for url in urls:
+		meiwen.insert(url, downloadurl(url))
+	meiwen.close()
 		

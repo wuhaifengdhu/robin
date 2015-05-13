@@ -8,7 +8,7 @@ class DBConn:
 	server = "mongodb://localhost:27017"
 
 	def connect(self):
-		self.conn = pymongo.Connection(self.servers)
+		self.conn = pymongo.Connection(self.server)
 
 	def close(self):
 		return self.conn.disconnect()
